@@ -1,0 +1,31 @@
+/* Tile Overlay */
+.tile-overlay {
+  z-index: 1000;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  pointer-events: auto; /* Allow interaction with the tile */
+}
+
+/* Cursor pointer for the "Read more" link */
+.readMore {
+  cursor: pointer;
+  color: red;
+}
+
+.readMore:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .tile-overlay {
+    top: auto; /* Remove the top positioning */
+    left: auto; /* Remove the left positioning */
+    right: 0; /* Position at the bottom center on mobile */
+    bottom: 0;
+    width: 100%; /* Full width on mobile */
+    transform: none; /* Remove vertical transform */
+  }
+}
