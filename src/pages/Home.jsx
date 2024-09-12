@@ -1,34 +1,25 @@
 import { useState } from 'react';
 import { searchForPeople, searchForShows } from '../api/tvmaze';
+import SearchForm from '../Components/searchForm';
 
 const Home = () => {
-  const [searchStr, setSearchStr] = useState('');
   const [apiData, setApiData] = useState(null);
-  const [apiDataError, setApiErrorData] = useState(null);
-  const [searchOption, setSearchOption] = useState('shows');
+  const [apiDataError, setApiDataError] = useState(null);
 
-  const onSearchInputChange = ev => {
-    setSearchStr(ev.target.value);
-  };
-
-  const onRadioChange = ev => {
-    setSearchOption(ev.target.value);
-  };
-
-  const onSearch = async ev => {
-    ev.preventDefault();
+  const onSearch = async ({ q, searchOption }) => {
     try {
-      setApiErrorData(null);
+      setApiDataError(null);
+
+      let result;
 
       if (searchOption === 'shows') {
-        const result = await searchForShows(searchStr);
-        setApiData(result);
+        result = await searchForShows(q);
       } else {
-        const result = await searchForPeople(searchStr);
-        setApiData(result);
+        result = await searchForPeople(q);
       }
+      setApiData(result);
     } catch (error) {
-      setApiErrorData(error);
+      setApiDataError(error);
     }
   };
 
@@ -48,33 +39,7 @@ const Home = () => {
   };
   return (
     <div>
-      <form onSubmit={onSearch}>
-        <label>
-          <input
-            type="radio"
-            name="search_option"
-            value="shows"
-            checked={searchOption === 'shows'}
-            onChange={onRadioChange}
-          />
-          Shows
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="search_option"
-            value="actors"
-            checked={searchOption === 'actors'}
-            onChange={onRadioChange}
-          />
-          Actors
-        </label>
-
-        <input type="text" value={searchStr} onChange={onSearchInputChange} />
-
-        <button type="submit">Search</button>
-      </form>
-
+      <SearchForm onSearch={onSearch} />
       <div>{renderApiData()}</div>
     </div>
   );
