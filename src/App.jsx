@@ -13,7 +13,7 @@ function App() {
           <Route path="/starred" element={<Starred />} />
         </Route>
 
-        <Route path="show/:showId" element={<Show />} />
+        <Route path="/show/:showId" element={<Show />} />
 
         <Route path="*" element={<div>Not Found</div>} />
       </Routes>

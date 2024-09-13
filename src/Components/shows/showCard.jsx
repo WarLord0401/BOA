@@ -19,7 +19,7 @@ const ShowCard = ({ name, image, id, summary }) => {
   const cardRef = useRef(null); // Ref for the entire container
 
   const summaryStripped = summary
-    ? summary.split(' ').splice(0, 10).join(' ').replace(/<.+?>/g, '')
+    ? summary.split(' ').splice(0, 15).join(' ').replace(/<.+?>/g, '')
     : 'No Description';
 
   const toggleTile = () => {
@@ -63,8 +63,10 @@ const ShowCard = ({ name, image, id, summary }) => {
         <StyledLink to={`/show/${id}`}>
           <h1>{name}</h1>
         </StyledLink>
-        <p>
-          {summaryStripped}...
+        <p>{summaryStripped}</p>
+
+        {/* Only display "Read more" if the summary exists and it's not "No Description" */}
+        {summary && summary !== 'No Description' && (
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <p
               className="readMore"
@@ -72,14 +74,14 @@ const ShowCard = ({ name, image, id, summary }) => {
               ref={readMoreRef}
               style={{ marginRight: '10px' }} // Space between "Read more" and the tile
             >
-              Read more
+              Read more...
             </p>
             <button type="button"> Star me</button>
           </div>
-        </p>
+        )}
 
         {/* Floating Tile for full summary */}
-        {isTileOpen && (
+        {isTileOpen && summary && (
           <div
             className="tile-overlay"
             style={{
