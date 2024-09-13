@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getShowById } from '../api/tvmaze';
-const Show = () => {
+// Creating a custom hook(function) so that code is reusable-
+const useShowById = showId => {
   const [showData, setShowData] = useState(null);
   const [showError, setShowError] = useState(null);
 
-  const { showId } = useParams();
   useEffect(() => {
     async function fetchData() {
       try {
@@ -18,6 +18,12 @@ const Show = () => {
     fetchData();
   }, [showId]);
 
+  return { showData, showError };
+};
+
+const Show = () => {
+  const { showId } = useParams();
+  const { showData, showError } = useShowById(showId);
   if (showError) {
     return <div>We have an Error...{showError.message}</div>;
   }
