@@ -63,19 +63,23 @@ const ShowCard = ({ name, image, id, summary }) => {
         <StyledLink to={`/show/${id}`}>
           <h1>{name}</h1>
         </StyledLink>
-        <p>{summaryStripped}</p>
 
         {/* Only display "Read more" if the summary exists and it's not "No Description" */}
         {summary && summary !== 'No Description' && (
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <p
-              className="readMore"
-              onClick={toggleTile}
-              ref={readMoreRef}
-              style={{ marginRight: '10px' }} // Space between "Read more" and the tile
-            >
-              Read more...
-            </p>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <p>
+                {summaryStripped}{' '}
+                <span
+                  className="readMore"
+                  ref={readMoreRef}
+                  onClick={toggleTile}
+                  style={{ marginRight: '10px' }}
+                >
+                  Read more...
+                </span>
+              </p>
+            </div>
             <button type="button"> Star me</button>
           </div>
         )}
@@ -88,7 +92,7 @@ const ShowCard = ({ name, image, id, summary }) => {
               position: 'absolute',
               top: readMoreRef.current?.offsetTop,
               left:
-                readMoreRef.current?.offsetLeft +
+                cardRef.current?.offsetLeft +
                 readMoreRef.current?.offsetWidth +
                 10, // Position to the right of "Read more"
               transform: 'translateY(10px)', // Adjust vertical position if needed
