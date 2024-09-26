@@ -6,7 +6,7 @@ import SearchForm from '../Components/searchForm';
 import ShowGrid from '../Components/shows/showGrid';
 
 const Home = () => {
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState(null);
 
   const { data: apiData, error: apiDataError } = useQuery({
     queryKey: ['search', filter],
@@ -17,6 +17,7 @@ const Home = () => {
     enabled: !!filter,
     refetchOnWindowFocus: false,
   });
+
   const onSearch = async ({ q, searchOption }) => {
     setFilter({ q, searchOption });
   };
