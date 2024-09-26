@@ -45,9 +45,24 @@ const SearchForm = ({ onSearch }) => {
         Actors
       </label>
 
-      <input type="text" value={searchStr} onChange={onSearchInputChange} />
+      <input
+        type="text"
+        value={searchStr}
+        onChange={onSearchInputChange}
+        style={{ marginLeft: 10 }}
+      />
 
-      <button type="submit">Search</button>
+      <button
+        type="submit"
+        style={{
+          padding: '8px 12px',
+          fontSize: '16px',
+          cursor: 'pointer',
+          marginLeft: 10,
+        }}
+      >
+        Search
+      </button>
     </form>
   );
 };

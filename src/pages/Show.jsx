@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getShowById } from '../api/tvmaze';
 import Cast from '../Components/Cast';
 import Seasons from '../Components/Seasons';
@@ -14,6 +14,14 @@ const Show = () => {
     refetchOnWindowFocus: false,
   });
 
+  const navigateTo = useNavigate();
+  const HomePage = () => {
+    navigateTo('/');
+  };
+  const Back = () => {
+    navigateTo(-1);
+  };
+
   if (showError) {
     return <div>We have an Error...{showError.message}</div>;
   }
@@ -21,6 +29,12 @@ const Show = () => {
   if (showData) {
     return (
       <div>
+        <button type="button" onClick={HomePage}>
+          Home Page
+        </button>
+        <button type="button" onClick={Back}>
+          Go Back
+        </button>
         <ShowMainData
           image={showData.image}
           name={showData.name}
