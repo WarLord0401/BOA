@@ -12,7 +12,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const ShowCard = ({ name, image, id, summary, onStar }) => {
+const ShowCard = ({ name, image, id, summary, onStar, isStarred }) => {
   const [isTileOpen, setIsTileOpen] = useState(false); // Tile visibility state
   const tileRef = useRef(null); // Ref for the tile content
   const readMoreRef = useRef(null); // Ref for the "Read more" text
@@ -80,7 +80,14 @@ const ShowCard = ({ name, image, id, summary, onStar }) => {
                 </span>
               </p>
             </div>
-            <button type="button" onClick={()=>{onStar(id)}}> Star me</button>
+            <button
+              type="button"
+              onClick={() => {
+                onStar(id);
+              }}
+            >
+              {isStarred ? 'Unstar' : 'Star'}
+            </button>
           </div>
         )}
 
