@@ -60,7 +60,7 @@ const ShowCard = ({ name, image, id, summary, onStar, isStarred }) => {
           <img alt={name} src={image} />
         </SearchImgWrapper>
 
-        <StyledLink to={`/show/${id}/`} target="_blank" rel="noreferrer">
+        <StyledLink to={`/show/${id}/`}>
           <h1>{name}</h1>
         </StyledLink>
 
@@ -75,7 +75,7 @@ const ShowCard = ({ name, image, id, summary, onStar, isStarred }) => {
                   </div>
                 </p>
               </div>
-              <StarBtn ref={starRef} type="button" onClick={handleStarClick()}>
+              <StarBtn ref={starRef} type="button" onClick={handleStarClick}>
                 <StarIcon active={isStarred} />
               </StarBtn>
             </ActionSection>

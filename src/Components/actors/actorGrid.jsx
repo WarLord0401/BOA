@@ -8,6 +8,7 @@ const ActorGrid = ({ actors }) => {
         <ActorCard
           key={data.person.id}
           name={data.person.name}
+          // Use the fallback image if the actor image is not available
           image={data.person.image ? data.person.image.medium : '/person.jpg'}
           gender={data.person.gender}
           country={data.person.country ? data.person.country.name : null}

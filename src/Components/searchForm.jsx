@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useStr } from '../lib/useSearchStr';
 import CustomRadio from './CustomRadio';
@@ -6,6 +7,19 @@ import CustomRadio from './CustomRadio';
 const SearchForm = ({ onSearch, onReset }) => {
   const [searchStr, setSearchStr] = useStr();
   const [searchOption, setSearchOption] = useState('shows');
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Parse query params on page load or when the location changes
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const q = queryParams.get('q') || '';
+    const option = queryParams.get('searchOption') || 'shows';
+
+    setSearchStr(q);
+    setSearchOption(option);
+  }, [location.search, setSearchStr]);
 
   const onSearchInputChange = ev => {
     setSearchStr(ev.target.value);
@@ -22,6 +36,12 @@ const SearchForm = ({ onSearch, onReset }) => {
       q: searchStr,
       searchOption,
     };
+
+    // Update the URL with query parameters
+    navigate(
+      `/?q=${encodeURIComponent(searchStr)}&searchOption=${searchOption}`
+    );
+
     onSearch(options);
   };
 
@@ -53,9 +73,7 @@ const SearchForm = ({ onSearch, onReset }) => {
       </RadiosWrapper>
 
       <ButtonsWrapper>
-        <button type="submit">
-          Search
-        </button>
+        <button type="submit">Search</button>
         <button type="button" onClick={onReset}>
           Reset
         </button>
