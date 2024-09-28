@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/BOA/static/css/main.78f45ff7.css",
-    "main.js": "/BOA/static/js/main.86db102c.js",
-    "static/js/453.ed3810f9.chunk.js": "/BOA/static/js/453.ed3810f9.chunk.js",
-    "service-worker.js": "/BOA/service-worker.js",
-    "index.html": "/BOA/index.html",
-    "main.78f45ff7.css.map": "/BOA/static/css/main.78f45ff7.css.map",
-    "main.86db102c.js.map": "/BOA/static/js/main.86db102c.js.map",
-    "453.ed3810f9.chunk.js.map": "/BOA/static/js/453.ed3810f9.chunk.js.map"
+    "main.css": "/my-app/static/css/main.78f45ff7.css",
+    "main.js": "/my-app/static/js/main.5ff221f8.js",
+    "static/js/453.ed3810f9.chunk.js": "/my-app/static/js/453.ed3810f9.chunk.js",
+    "service-worker.js": "/my-app/service-worker.js",
+    "index.html": "/my-app/index.html",
+    "main.78f45ff7.css.map": "/my-app/static/css/main.78f45ff7.css.map",
+    "main.5ff221f8.js.map": "/my-app/static/js/main.5ff221f8.js.map",
+    "453.ed3810f9.chunk.js.map": "/my-app/static/js/453.ed3810f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.78f45ff7.css",
-    "static/js/main.86db102c.js"
+    "static/js/main.5ff221f8.js"
   ]
 }
