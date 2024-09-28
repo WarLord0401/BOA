@@ -2,6 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://WarLord0401.github.io/BOA",
   "dependencies": {
     "@tanstack/react-query": "^5.56.2",
     "react": "^18.3.1",
@@ -24,6 +25,8 @@
     "workbox-streams": "^6.6.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
