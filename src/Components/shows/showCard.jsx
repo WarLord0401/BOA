@@ -46,6 +46,21 @@ const ShowCard = ({ name, image, id, summary, onStar, isStarred }) => {
     };
   }, [isTileOpen]);
 
+  const starRef = useRef();
+
+  const handleStarClick = () => {
+    onStar(id);
+    const starBtnEl = starRef.current;
+
+    if (!starBtnEl) return;
+
+    if (isStarred) {
+      starBtnEl.classList.remove('animate');
+    } else {
+      starBtnEl.classList.add('animate');
+    }
+  };
+
   return (
     <div>
       {/* Apply a custom class to blur the content conditionally */}
@@ -68,12 +83,7 @@ const ShowCard = ({ name, image, id, summary, onStar, isStarred }) => {
                   </div>
                 </p>
               </div>
-              <StarBtn
-                type="button"
-                onClick={() => {
-                  onStar(id);
-                }}
-              >
+              <StarBtn ref={starRef} type="button" onClick={handleStarClick()}>
                 <StarIcon active={isStarred} />
               </StarBtn>
             </ActionSection>
@@ -127,5 +137,21 @@ const StarBtn = styled.button`
   align-items: center;
   &:hover {
     cursor: pointer;
+  }
+  &.animate {
+    ${StarIcon} {
+      animation: increase 0.5s ease-in forwards;
+      @keyframes increase {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(2) rotate(45deg);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    }
   }
 `;
