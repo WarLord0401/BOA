@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import './ShowCard.css'; // Add your CSS styles here
+import { SearchCard, SearchImgWrapper } from '../common/SearchCard';
+import { StarIcon } from '../common/StarIcon';
+import './ShowCard.css'; // Import your CSS here
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -15,105 +17,115 @@ const StyledLink = styled(Link)`
 const ShowCard = ({ name, image, id, summary, onStar, isStarred }) => {
   const [isTileOpen, setIsTileOpen] = useState(false); // Tile visibility state
   const tileRef = useRef(null); // Ref for the tile content
-  const readMoreRef = useRef(null); // Ref for the "Read more" text
-  const cardRef = useRef(null); // Ref for the entire container
 
   const summaryStripped = summary
-    ? summary.split(' ').splice(0, 15).join(' ').replace(/<.+?>/g, '')
+    ? summary.split(' ').splice(0, 15).join(' ').replace(/<.+?>/g, '') + '...'
     : 'No Description';
 
   const toggleTile = () => {
-    setIsTileOpen(!isTileOpen);
+    setIsTileOpen(prev => !prev);
   };
 
-  // Close the tile if the mouse moves away from the "Read more" text or tile
+  // Close the tile when clicking outside of it
   useEffect(() => {
-    const handleMouseLeave = e => {
-      if (cardRef.current && !cardRef.current.contains(e.relatedTarget)) {
+    const handleClickOutside = event => {
+      if (tileRef.current && !tileRef.current.contains(event.target)) {
         setIsTileOpen(false);
       }
     };
 
-    const currentCardRef = cardRef.current; // Capture the current value of the ref
-
-    if (currentCardRef) {
-      currentCardRef.addEventListener('mouseleave', handleMouseLeave);
+    if (isTileOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
     }
 
+    // Cleanup the event listener
     return () => {
-      if (currentCardRef) {
-        currentCardRef.removeEventListener('mouseleave', handleMouseLeave);
-      }
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isTileOpen]);
 
   return (
-    <div
-      ref={cardRef}
-      style={{ position: 'relative', display: 'flex', alignItems: 'center' }}
-    >
-      <div>
-        <img
-          alt={name}
-          src={image}
-          style={{ width: '210px', height: '295px' }}
-        />
-      </div>
-      <div style={{ marginLeft: '20px', flexGrow: 1 }}>
-        <StyledLink to={`/show/${id}`}>
-          <h1>{name}</h1>
-        </StyledLink>
+    <div>
+      {/* Apply a custom class to blur the content conditionally */}
+      <SearchCard>
+        <SearchImgWrapper>
+          <img alt={name} src={image} />
+        </SearchImgWrapper>
 
-        {/* Only display "Read more" if the summary exists and it's not "No Description" */}
-        {summary && summary !== 'No Description' && (
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <p>
-                {summaryStripped}{' '}
-                <span
-                  className="readMore"
-                  ref={readMoreRef}
-                  onClick={toggleTile}
-                  style={{ marginRight: '10px' }}
-                >
-                  Read more...
-                </span>
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                onStar(id);
-              }}
-            >
-              {isStarred ? 'Unstar' : 'Star'}
-            </button>
-          </div>
-        )}
+        <div>
+          <StyledLink to={`/show/${id}`}>
+            <h1>{name}</h1>
+          </StyledLink>
+          {summary && summary !== 'No Description' && (
+            <ActionSection>
+              <div>
+                <p>
+                  {summaryStripped}{' '}
+                  <div className="readMore" onClick={toggleTile}>
+                    Read more
+                  </div>
+                </p>
+              </div>
+              <StarBtn
+                type="button"
+                onClick={() => {
+                  onStar(id);
+                }}
+              >
+                <StarIcon active={isStarred} />
+              </StarBtn>
+            </ActionSection>
+          )}
+        </div>
+      </SearchCard>
 
-        {/* Floating Tile for full summary */}
-        {isTileOpen && summary && (
-          <div
-            className="tile-overlay"
-            style={{
-              position: 'absolute',
-              top: readMoreRef.current?.offsetTop,
-              left:
-                cardRef.current?.offsetLeft +
-                readMoreRef.current?.offsetWidth +
-                10, // Position to the right of "Read more"
-              transform: 'translateY(10px)', // Adjust vertical position if needed
-            }}
-          >
-            <div className="tile-content" ref={tileRef}>
-              <h2>Full Summary</h2>
-              <p>{summary.replace(/<.+?>/g, '')}</p>
-            </div>
+      {/* Overlay for the blurred background */}
+      {isTileOpen && (
+        <div className="overlay" onClick={() => setIsTileOpen(false)} />
+      )}
+
+      {/* Floating Tile for full summary */}
+      {isTileOpen && summary && (
+        <div className="tile-overlay" ref={tileRef}>
+          <div className="tile-content">
+            <h2>{name}</h2>
+            <p>{summary.replace(/<.+?>/g, '')}</p>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default ShowCard;
+
+const ActionSection = styled.div`
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  a {
+    text-decoration-color: #000;
+    color: #000;
+    &:hover {
+      text-decoration-color: blue;
+      color: blue;
+    }
+  }
+`;
+
+const StarBtn = styled.button`
+  outline: none;
+  border: 1px solid #8e8e8e;
+  border-radius: 15px;
+  padding: 5px 20px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
+`;

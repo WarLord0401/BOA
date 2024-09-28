@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
 import { getShowById } from '../api/tvmaze';
-import Cast from '../Components/Cast';
-import Seasons from '../Components/Seasons';
+import { TextCenter } from '../Components/common/TextCenter';
+import Cast from '../Components/shows/Cast';
 import Details from '../Components/shows/details';
+import Seasons from '../Components/shows/Seasons';
 import ShowMainData from '../Components/shows/showMainData';
 
 const Show = () => {
@@ -23,18 +25,21 @@ const Show = () => {
   };
 
   if (showError) {
-    return <div>We have an Error...{showError.message}</div>;
+    return <TextCenter>We have an Error...{showError.message}</TextCenter>;
   }
 
   if (showData) {
     return (
-      <div>
-        <button type="button" onClick={HomePage}>
-          Home Page
-        </button>
-        <button type="button" onClick={Back}>
-          Go Back
-        </button>
+      <ShowPageWrapper>
+        <BackHomeWrapper>
+          <button type="button" onClick={HomePage}>
+            Home Page
+          </button>
+          <button type="button" onClick={Back}>
+            Go Back
+          </button>
+        </BackHomeWrapper>
+
         <ShowMainData
           image={showData.image}
           name={showData.name}
@@ -42,24 +47,59 @@ const Show = () => {
           summary={showData.summary}
           genres={showData.genres}
         />
-        <Details
-          status={showData.status}
-          premiered={showData.premiered}
-          network={showData.network}
-        />
-        <div>
+        <InfoBlock>
+          <h2>Details:</h2>
+          <Details
+            status={showData.status}
+            premiered={showData.premiered}
+            network={showData.network}
+          />
+        </InfoBlock>
+        <InfoBlock>
           <h2>Seasons:</h2>
           <Seasons seasons={showData._embedded.seasons} />
-        </div>
-        <div>
+        </InfoBlock>
+        <InfoBlock>
           <h2>Cast: </h2>
           <Cast cast={showData._embedded.cast} />
-        </div>
-      </div>
+        </InfoBlock>
+      </ShowPageWrapper>
     );
   }
 
-  return <div>loading...</div>;
+  return <TextCenter>loading...</TextCenter>;
 };
 
 export default Show;
+
+const BackHomeWrapper = styled.div`
+  margin-bottom: 30px;
+  text-align: left;
+  a {
+    padding: 10px;
+    color: ${({ theme }) => theme.mainColors.dark};
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
+const ShowPageWrapper = styled.div`
+  margin: auto;
+  @media only screen and (min-width: 768px) {
+    max-width: 700px;
+  }
+  @media only screen and (min-width: 992px) {
+    max-width: 900px;
+  }
+`;
+
+const InfoBlock = styled.div`
+  margin-bottom: 40px;
+  h2 {
+    margin: 0;
+    margin-bottom: 30px;
+    font-size: 22px;
+  }
+`;

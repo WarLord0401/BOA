@@ -35,7 +35,7 @@ const Box = styled.div`
   display: flex;
   width: fit-content;
   border-radius: 15px;
-  background-color: ${({ theme }) => theme.mainColors.dark};
+  background-color: ${({ theme }) => theme.mainColors.grey};
 `;
 
 const NavList = styled.ul`
@@ -52,11 +52,18 @@ const LinkStyled = styled(NavLink)`
   position: relative;
   text-decoration: none;
   color: ${({ theme }) => theme.mainColors.light};
-  background-color: ${({ theme }) => theme.mainColors.dark};
+  background-color: ${({ theme }) => theme.mainColors.grey};
   border-radius: 16px;
+  &:hover {
+    color: ${({ theme }) => theme.mainColors.light};
+    background-color: ${({ theme }) => theme.mainColors.dark};
+  }
   &.active {
-    color: ${({ theme }) => theme.mainColors.grey};
-    box-shadow: inset 0px 0px 5px 0px ${({ theme }) => theme.mainColors.light};
+    color: ${({ theme }) => theme.mainColors.light};
+    box-shadow: inset 0px 0px 1px 0px;
+    pointer-events: none; /* Disables all pointer events (click, hover, etc.) */
+    background-color: ${({ theme }) => theme.mainColors.dark};
+
     &:after {
       content: '';
       position: absolute;
@@ -64,7 +71,7 @@ const LinkStyled = styled(NavLink)`
       height: 2px;
       left: 0%;
       bottom: 0;
-      background-color: ${({ theme }) => theme.mainColors.grey};
+      background-color: ${({ theme }) => theme.mainColors.dark};
       animation: slide-in 3s ease-in forwards;
       @keyframes slide-in {
         from {
