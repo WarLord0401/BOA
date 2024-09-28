@@ -3,16 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { SearchCard, SearchImgWrapper } from '../common/SearchCard';
 import { StarIcon } from '../common/StarIcon';
-import './ShowCard.css'; // Import your CSS here
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
+import './ShowCard.css';
 
 const ShowCard = ({ name, image, id, summary, onStar, isStarred }) => {
   const [isTileOpen, setIsTileOpen] = useState(false); // Tile visibility state
@@ -69,10 +60,11 @@ const ShowCard = ({ name, image, id, summary, onStar, isStarred }) => {
           <img alt={name} src={image} />
         </SearchImgWrapper>
 
+        <StyledLink to={`/show/${id}/`} target="_blank" rel="noreferrer">
+          <h1>{name}</h1>
+        </StyledLink>
+
         <div>
-          <StyledLink to={`/show/${id}`}>
-            <h1>{name}</h1>
-          </StyledLink>
           {summary && summary !== 'No Description' && (
             <ActionSection>
               <div>
@@ -123,6 +115,15 @@ const ActionSection = styled.div`
       text-decoration-color: blue;
       color: blue;
     }
+  }
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    text-decoration: underline;
   }
 `;
 

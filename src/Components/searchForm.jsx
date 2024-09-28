@@ -53,7 +53,9 @@ const SearchForm = ({ onSearch, onReset }) => {
       </RadiosWrapper>
 
       <ButtonsWrapper>
-        <button type="submit">Search</button>
+        <button type="submit">
+          Search
+        </button>
         <button type="button" onClick={onReset}>
           Reset
         </button>
