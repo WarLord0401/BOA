@@ -17,6 +17,7 @@ const Show = () => {
   });
 
   const navigateTo = useNavigate();
+
   const HomePage = () => {
     navigateTo('/');
   };
@@ -32,12 +33,19 @@ const Show = () => {
     return (
       <ShowPageWrapper>
         <BackHomeWrapper>
-          <button type="button" onClick={HomePage}>
-            Home Page
-          </button>
-          <button type="button" onClick={Back}>
-            Go Back
-          </button>
+          <ul>
+            <li>
+              <button type="button" onClick={HomePage}>
+                Home Page
+              </button>
+            </li>
+            <li className="separator">|</li>
+            <li>
+              <button type="button" onClick={Back}>
+                Go Back
+              </button>
+            </li>
+          </ul>
         </BackHomeWrapper>
 
         <ShowMainData
@@ -79,15 +87,53 @@ const Show = () => {
 export default Show;
 
 const BackHomeWrapper = styled.div`
-  margin-bottom: 30px;
+  margin-top: -50px;
+  padding-bottom: 30px;
   text-align: left;
-  a {
-    padding: 10px;
-    color: ${({ theme }) => theme.mainColors.dark};
+
+  ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0;
+    display: flex; /* Flexbox to align items horizontally */
+    gap: 10px; /* Space between items */
+  }
+
+  li {
+    display: inline; /* Ensure list items are inline */
+  }
+
+  button {
+    background: none;
+    border: none;
+    color: ${({ theme }) => theme.mainColors.dark}; /* Dark color */
+    font-size: 18px;
+    cursor: pointer;
     text-decoration: none;
+    padding: 0;
+    transition:
+      color 0.3s ease,
+      text-decoration 0.3s ease;
+
     &:hover {
-      text-decoration: underline;
+      color: ${({ theme }) =>
+        theme.mainColors.primary}; /* Change color on hover */
+      text-decoration: underline; /* Underline on hover */
     }
+
+    &:focus {
+      outline: none; /* Remove focus outline */
+    }
+
+    &:active {
+      color: ${({ theme }) =>
+        theme.mainColors.dark}; /* Darker color on click */
+    }
+  }
+
+  .separator {
+    color: ${({ theme }) =>
+      theme.mainColors.dark}; /* Set color for separator */
+    margin: 0 10px; /* Space around separator */
   }
 `;
 
