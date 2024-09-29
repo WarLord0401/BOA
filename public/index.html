@@ -24,10 +24,19 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,&display=swap"
-      rel="stylesheet"
-    />
+    <style>
+      @font-face {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src:
+          local('Roboto'),
+          url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Me5Q.ttf)
+            format('truetype');
+      }
+    </style>
+
     <title>Box Office</title>
   </head>
   <body>
