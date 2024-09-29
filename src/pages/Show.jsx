@@ -61,7 +61,13 @@ const Show = () => {
         </InfoBlock>
         <InfoBlock>
           <h2>Cast: </h2>
-          <Cast cast={showData._embedded.cast} />
+          {showData._embedded &&
+          showData._embedded.cast &&
+          showData._embedded.cast.length > 0 ? (
+            <Cast cast={showData._embedded.cast} />
+          ) : (
+            <p>N/A</p>
+          )}
         </InfoBlock>
       </ShowPageWrapper>
     );

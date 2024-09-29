@@ -1,14 +1,12 @@
 import styled from 'styled-components';
+import NoPosterAvailable from '../../lib/no-poster-available.jpg';
 import { StarIcon } from '../common/StarIcon';
 
 const ShowMainData = ({ image, name, rating, summary, genres }) => {
   return (
     <MainDataWrapper className="page">
       <div className="img-wrap">
-        <img
-          src={image ? image.original : '/no-poster-available.jpg'}
-          alt={name}
-        />
+        <img src={image ? image.original : NoPosterAvailable} alt={name} />
       </div>
       <DataSection>
         <Headline>
