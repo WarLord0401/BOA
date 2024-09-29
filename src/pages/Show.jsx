@@ -18,6 +18,15 @@ const Show = () => {
 
   const navigateTo = useNavigate();
 
+  const handleLinkClick = (callback, delay = 300) => {
+    return e => {
+      e.preventDefault();
+      setTimeout(() => {
+        callback();
+      }, delay); // Delay of 300ms before navigation
+    };
+  };
+
   const HomePage = () => {
     navigateTo('/');
   };
@@ -35,19 +44,18 @@ const Show = () => {
         <BackHomeWrapper>
           <ul>
             <li>
-              <button type="button" onClick={HomePage}>
+              <button type="button" onClick={handleLinkClick(HomePage, 500)}>
                 Home Page
               </button>
             </li>
             <li className="separator">|</li>
             <li>
-              <button type="button" onClick={Back}>
+              <button type="button" onClick={handleLinkClick(Back, 500)}>
                 Go Back
               </button>
             </li>
           </ul>
         </BackHomeWrapper>
-
         <ShowMainData
           image={showData.image}
           name={showData.name}
@@ -103,21 +111,24 @@ const BackHomeWrapper = styled.div`
   }
 
   button {
+    width: 3cm;
+    padding-inline: 2px;
     background: none;
     border: none;
-    color: ${({ theme }) => theme.mainColors.dark}; /* Dark color */
+    color: ${({ theme }) => theme.mainColors.dark};
     font-size: 18px;
     cursor: pointer;
     text-decoration: none;
-    padding: 0;
     transition:
       color 0.3s ease,
       text-decoration 0.3s ease;
 
     &:hover {
-      color: ${({ theme }) =>
-        theme.mainColors.primary}; /* Change color on hover */
-      text-decoration: underline; /* Underline on hover */
+      border-radius: 5px;
+      color: ${({ theme }) => theme.mainColors.light};
+      background-color: ${({ theme }) => theme.mainColors.dark};
+      text-decoration: underline;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
     }
 
     &:focus {
@@ -125,8 +136,8 @@ const BackHomeWrapper = styled.div`
     }
 
     &:active {
-      color: ${({ theme }) =>
-        theme.mainColors.dark}; /* Darker color on click */
+      color: ${({ theme }) => theme.mainColors.dark};
+      background-color: ${({ theme }) => theme.mainColors.dark};
     }
   }
 
