@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
+
 export default function AppTitle(props) {
   const {
-    title = 'Box Office',
-    subtitle = 'Are you looking for a Movie or an Actor?',
+    title = 'Box Office App',
+    subtitle = 'Search for Movies, Shows & Actors',
   } = props;
   return (
     <TitleWrapper>
@@ -17,13 +18,13 @@ const TitleWrapper = styled.div`
   text-align: center;
   margin: 0 0 40px;
   h1 {
-    color: ${({ theme }) => theme.mainColors.dark};
+    color: ${({ theme }) => theme.mainColors.grey};
     letter-spacing: 10px;
     text-transform: uppercase;
     margin: 0 0 10px;
   }
   p {
-    color: ${({ theme }) => theme.mainColors.grey};
+    color: ${({ theme }) => theme.mainColors.dark};
     margin: 0;
   }
 `;

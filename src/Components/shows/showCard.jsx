@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components'; // Import useTheme from styled-components
 import { SearchCard, SearchImgWrapper } from '../common/SearchCard';
 import { StarIcon } from '../common/StarIcon';
 import './ShowCard.css';
@@ -8,6 +8,7 @@ import './ShowCard.css';
 const ShowCard = ({ name, image, id, summary, onStar, isStarred }) => {
   const [isTileOpen, setIsTileOpen] = useState(false); // Tile visibility state
   const tileRef = useRef(null); // Ref for the tile content
+  const theme = useTheme(); // Access the theme
 
   const summaryStripped = summary
     ? summary.split(' ').splice(0, 15).join(' ').replace(/<.+?>/g, '') + '...'
@@ -60,13 +61,15 @@ const ShowCard = ({ name, image, id, summary, onStar, isStarred }) => {
           <img alt={name} src={image} />
         </SearchImgWrapper>
 
-        <StyledLink to={`/show/${id}/`}>
-          <h1>{name}</h1>
+        <StyledLink to={`/show/${id}/`} theme={theme}>
+          <h1 style={{ color: ({ theme }) => theme.mainColors.grey }}>
+            {name}
+          </h1>
         </StyledLink>
 
         <div>
           {summary && summary !== 'No Description' && (
-            <ActionSection>
+            <ActionSection theme={theme}>
               <div>
                 <p>
                   {summaryStripped}{' '}
@@ -75,7 +78,12 @@ const ShowCard = ({ name, image, id, summary, onStar, isStarred }) => {
                   </div>
                 </p>
               </div>
-              <StarBtn ref={starRef} type="button" onClick={handleStarClick}>
+              <StarBtn
+                ref={starRef}
+                type="button"
+                onClick={handleStarClick}
+                theme={theme}
+              >
                 <StarIcon active={isStarred} />
               </StarBtn>
             </ActionSection>
@@ -90,8 +98,17 @@ const ShowCard = ({ name, image, id, summary, onStar, isStarred }) => {
 
       {/* Floating Tile for full summary */}
       {isTileOpen && summary && (
-        <div className="tile-overlay" ref={tileRef}>
-          <div className="tile-content">
+        <div
+          className="tile-overlay"
+          ref={tileRef}
+          style={{ backgroundColor: theme.mainColors.background }}
+        >
+          <div
+            className="tile-content"
+            style={{
+              color: theme.mainColors.shade,
+            }}
+          >
             <h2>{name}</h2>
             <p>{summary.replace(/<.+?>/g, '')}</p>
           </div>
@@ -108,20 +125,21 @@ const ActionSection = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  p {
+    color: ${({ theme }) => theme.mainColors.per};
+  }
+
   a {
-    text-decoration-color: #000;
-    color: #000;
+    color: ${({ theme }) => theme.mainColors.dark};
     &:hover {
-      text-decoration-color: blue;
-      color: blue;
+      text-decoration-color: ${({ theme }) => theme.mainColors.grey};
     }
   }
 `;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: inherit;
-
   &:hover {
     text-decoration: underline;
   }
@@ -129,16 +147,18 @@ const StyledLink = styled(Link)`
 
 const StarBtn = styled.button`
   outline: none;
-  border: 1px solid #8e8e8e;
+  border: 1px solid ${({ theme }) => theme.mainColors.grey}; /* Border color based on theme */
   border-radius: 15px;
   padding: 5px 20px;
-  background-color: #fff;
+  background-color: ${({ theme }) =>
+    theme.mainColors.light}; /* Button background based on theme */
   display: flex;
   justify-content: center;
   align-items: center;
   &:hover {
     cursor: pointer;
   }
+
   &.animate {
     ${StarIcon} {
       animation: increase 0.5s ease-in forwards;

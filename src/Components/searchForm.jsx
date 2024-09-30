@@ -46,7 +46,7 @@ const SearchForm = ({ onSearch, onReset }) => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit}>
       <SearchInput
         type="text"
         placeholder={`Search ${searchOption}`}
@@ -78,11 +78,17 @@ const SearchForm = ({ onSearch, onReset }) => {
           Reset
         </button>
       </ButtonsWrapper>
-    </form>
+    </Form>
   );
 };
 
 export default SearchForm;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const SearchInput = styled.input`
   display: block;
@@ -91,14 +97,15 @@ const SearchInput = styled.input`
   margin: auto;
   outline: none;
   padding: 13px 15px;
-  border: 1px solid #dbdbdb;
+  border: 1px solid ${({ theme }) => theme.mainColors.shade};
   box-shadow: 0px 0px 10px 0px rgba(219, 219, 219, 0.5);
   font-size: 14px;
   border-radius: 12px;
-  color: #8d8d8d;
+  color: ${({ theme }) => theme.mainColors.grey};
+
   &::placeholder {
     font-weight: 300;
-    color: #8d8d8d;
+    color: ${({ theme }) => theme.mainColors.grey};
   }
 `;
 
@@ -106,31 +113,36 @@ const RadiosWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin: 20px 0;
+
   label {
     margin: 0 15px;
+    color: ${({ theme }) =>
+      theme.mainColors.shade}; /* Change color based on theme */
   }
 `;
 
-const ButtonsWrapper = styled.div`
+export const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: center;
   gap: 10px;
 
   button {
-    color: #fff;
-    background-color: ${({ theme }) => theme.mainColors.grey};
+    color: ${({ theme }) => theme.mainColors.light};
+    background-color: ${({ theme }) => theme.mainColors.shade};
     padding: 10px 20px;
     font-size: 15px;
     border: none;
     outline: none;
     border-radius: 12px;
+
     &:hover {
       cursor: pointer;
-      background-color: ${({ theme }) => theme.mainColors.dark};
+      background-color: ${({ theme }) => theme.mainColors.grey};
     }
+
     &:active {
-      background-color: ${({ theme }) => theme.mainColors.light};
-      color: ${({ theme }) => theme.mainColors.dark};
+      background-color: ${({ theme }) => theme.mainColors.shade};
+      color: ${({ theme }) => theme.mainColors.grey};
     }
   }
 `;
