@@ -71,12 +71,10 @@ const ShowCard = ({ name, image, id, summary, onStar, isStarred }) => {
           {summary && summary !== 'No Description' && (
             <ActionSection theme={theme}>
               <div>
-                <p>
-                  {summaryStripped}{' '}
-                  <div className="readMore" onClick={toggleTile}>
-                    Read more
-                  </div>
-                </p>
+                {summaryStripped}
+                <div className="readMore" onClick={toggleTile}>
+                  Read more
+                </div>
               </div>
               <StarBtn
                 ref={starRef}
