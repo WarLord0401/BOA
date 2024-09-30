@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
-
 export default function AppTitle(props) {
   const {
-    title = 'Box Office App',
+    title = 'Box Office',
     subtitle = 'Search for Movies, Shows & Actors',
   } = props;
   return (
